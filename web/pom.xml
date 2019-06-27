@@ -136,11 +136,12 @@
             <artifactId>jboss-el-api_2.2_spec</artifactId>
         </dependency>
 
+	    <!--
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
             <version>3.1.4.RELEASE</version>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
