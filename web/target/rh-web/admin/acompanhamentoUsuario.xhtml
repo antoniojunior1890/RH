@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Usuário</a></li>
+            <li><a><i class="fa fa-edit"></i> Acompanhar Cadastro</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Usuário
+                                    <small>Acompanhar Cadastro</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <h:panelGroup id="busca" layout="block" styleClass="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-2 form-group">
+                                                        <h:outputLabel value="CPF" style="font-weight: 400;">
+                                                        </h:outputLabel>
+                                                        <p:inputMask id="cpf" mask="999.999.999-99"
+                                                                     value="#{acompanhamentoUsuarioVMB.buscaCpf}"
+                                                                     styleClass="form-control" validator="cpfValidator"
+                                                                     converter="maskConverter"/>
+                                                    </div>
+                                                    <div class="col-md-2 form-group">
+                                                        <h:commandLink class="btn btn-primary btn btn-block"
+                                                                       style="margin-top: 25px;float: right"
+                                                                       actionListener="#{acompanhamentoUsuarioVMB.buscarUsuario}">
+                                                            <i class="fa fa-search"></i>
+                                                            <f:ajax execute=":form:busca"
+                                                                    render=":form"
+                                                            ></f:ajax>
+                                                            <span>Buscar</span>
+                                                        </h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:panelGroup>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <p:dataTable value="#{acompanhamentoUsuarioVMB.usuarios}"
+                                                                 id="dtPessoa" var="usuario"
+                                                                 widgetVar="pessoaTable"
+                                                                 emptyMessage="Nenhum registro encontrado.">
+                                                        <p:column headerText="CPF"
+                                                                  style="width:55px">
+                                                            <h:outputText value="#{usuario.cpf}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Nome"
+                                                                  style="width:60px">
+                                                            <h:outputText value="#{usuario.pessoa.nome}"
+                                                                          style="text-align:left"/>
+                                                        </p:column>
+                                                        <p:column headerText="Editar"
+                                                                  style="width:2px;text-align:center">
+                                                            <h:commandLink
+                                                                    action="#{acompanhamentoUsuarioVMB.onClickUsuario}">
+                                                                <span class="fa fa-edit fa-lg"></span>
+                                                                <f:setPropertyActionListener value="#{usuario}"
+                                                                                             target="#{acompanhamentoUsuarioVMB.usuario}"></f:setPropertyActionListener>
+                                                            </h:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                            <div class="btn-group">
+                                                <h:commandLink class="btn btn-primary"
+                                                               action="#{acompanhamentoUsuarioVMB.onClickUsuario}"
+                                                               rendered="#{acompanhamentoUsuarioVMB.flagBotaoNovo}">
+                                                    <i class="fa fa-plus"></i>
+                                                    <span>Novo Usuário</span>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

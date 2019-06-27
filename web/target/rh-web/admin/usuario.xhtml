@@ -1,0 +1,180 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Usuário</a></li>
+            <li><a><i class="fa fa-edit"></i> Cadastrar</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 4000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>Usuário
+                                    <small>Cadastrar</small>
+                                </h2>
+                            </div>
+
+                            <h:form id="form" enctype="multipart/form-data">
+                                <p:tabView id="tabView">
+                                    <!--                                PESSOAL -->
+                                    <p:tab title="Pessoal" id="tab00">
+                                        <h:panelGroup id="pessoal" layout="block" styleClass="box-body">
+                                            <div class="row">
+                                                <div class="form-group col-md-12 page-header">
+                                                    <h3>Dados Pessoais</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-10 form-group">
+                                                    <h:outputLabel value="Nome Completo" for="nome"
+                                                                   style="font-weight: 400;">
+                                                        <i class="fa fa-asterisk" style="color: red;"></i>
+                                                    </h:outputLabel>
+                                                    <p:inputText id="nome"
+                                                                 value="#{pessoaVMB.usuario.pessoa.nome}"
+                                                                 styleClass="form-control" required="true"
+                                                                 requiredMessage="* Campo nome é requerido."/>
+                                                </div>
+                                                <div class="col-md-2 form-group">
+                                                    <h:outputLabel value="CPF " for="cpf"
+                                                                   style="font-weight: 400;">
+                                                        <i class="fa fa-asterisk" style="color: red;"></i>
+                                                    </h:outputLabel>
+                                                    <p:inputMask mask="?999.999.999-99" id="cpf"
+                                                                 value="#{pessoaVMB.usuario.pessoa.cpf}"
+                                                                 styleClass="form-control" required="true"
+                                                                 validator="cpfValidator" converter="maskConverter"
+                                                                 requiredMessage="* Campo cpf é requerido."/>
+                                                </div>
+                                            </div>
+                                            <!-- PERFIL -->
+                                            <div class="row">
+                                                <div class="form-group col-md-12 page-header">
+                                                    <h3>Perfil</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5 form-group">
+                                                    <h:outputLabel value="Perfil" style="font-weight: 400;">
+                                                        <i class="fa fa-asterisk" style="color: red;"></i>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu id="perfil" styleClass="form-control"
+                                                                     value="#{pessoaVMB.perfil}"
+                                                                     required="true"
+                                                                     requiredMessage="* Campo perfil é requerido."
+                                                                     converter="conversor">
+                                                        <f:selectItem noSelectionOption="true"/>
+                                                        <f:selectItems itemLabel="#{perfil.nome}"
+                                                                       value="#{pessoaVMB.perfis}"
+                                                                       var="perfil"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                            </div>
+                                            <!-- CONTATOS -->
+                                            <div class="row">
+                                                <div class="form-group col-md-12 page-header">
+                                                    <h3>Contatos</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2 form-group">
+                                                    <h:outputLabel value="Telefone" for="telefone"
+                                                                   style="font-weight: 400;">
+                                                    </h:outputLabel>
+                                                    <p:inputMask mask="(99) 99999-9999" id="telefone"
+                                                                 value="#{pessoaVMB.usuario.pessoa.telefone}"
+                                                                 styleClass="form-control"/>
+                                                </div>
+                                                <div class="col-md-2 form-group">
+                                                    <h:outputLabel value="Celular" for="celular"
+                                                                   style="font-weight: 400;">
+                                                        <i class="fa fa-asterisk" style="color: red;"></i>
+                                                    </h:outputLabel>
+                                                    <p:inputMask mask="(99) 99999-9999" id="celular"
+                                                                 value="#{pessoaVMB.usuario.pessoa.celular}"
+                                                                 styleClass="form-control" required="true"
+                                                                 requiredMessage="* Campo celular é requerido."/>
+                                                </div>
+                                                <div class="col-md-8 form-group">
+                                                    <h:outputLabel value="Email" for="email"
+                                                                   style="font-weight: 400;">
+                                                        <i class="fa fa-asterisk" style="color: red;"></i>
+                                                    </h:outputLabel>
+                                                    <p:inputText id="email"
+                                                                 value="#{pessoaVMB.usuario.pessoa.email}"
+                                                                 styleClass="form-control" required="true"
+                                                                 validator="emailValidator"
+                                                                 requiredMessage="* Campo email é requerido."/>
+                                                </div>
+                                            </div>
+                                            <div class="box-footer">
+                                                <div class="btn-group">
+                                                </div>
+                                                <div class="btn-group">
+                                                    <h:commandLink class="btn btn-success"
+                                                                   actionListener="#{pessoaVMB.salvar}"
+                                                                   style="color:white">
+                                                        <i class="fa fa-save"></i>
+                                                        <f:ajax execute=":form:tabView:pessoal"
+                                                                render=":form:tabView :form:tabView:pessoal"
+                                                                onevent="dettach()"></f:ajax>
+                                                        <span>Salvar</span>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </h:panelGroup>
+                                    </p:tab>
+                                </p:tabView>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+        <script>
+            var dettach = function () {
+                $('.select2').select2('destroy');
+                $('.select2-drop-mask').remove();
+            };
+
+            var attach = function () {
+                $('.select2').select2({
+                    allowClear: false,
+                    minimumInputLength: 0,
+                    placeholder: ' '
+                });
+            };
+
+            jsf.ajax.addOnEvent(function (data) {
+                switch (data.status) {
+                    case "success":
+                        attach();
+                        break;
+                }
+            });
+
+            $(window).ready(function () {
+                attach();
+            });
+        </script>
+    </ui:define>
+</ui:composition>
+</html>

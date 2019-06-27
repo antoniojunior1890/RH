@@ -1,0 +1,185 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html"
+             xmlns:p="http://primefaces.org/ui">
+    <h:form>
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="../resources/img/avatar5.png" class="img-circle"
+                             alt="User Image"/>
+                    </div>
+                    <div class="pull-left info">
+                        <p>#{msg['dlg.hello']}, #{usuarioSMB.nomeSobrenome}</p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+                <h:form class="sidebar-form">
+                    <div class="input-group"></div>
+                </h:form>
+
+                <ul class="sidebar-menu">
+                    <li class="treeview"><a href="#"> <i class="fa fa-user"></i>
+                        <span>Perfil</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                        <ul class="treeview-menu">
+                            <li><h:commandLink action="#{usuarioSMB.onClickRedefinirSenha}">
+                                <i class="fa fa-angle-double-right"></i>
+                                <span>Redefinir Senha</span>
+                            </h:commandLink></li>
+                        </ul>
+                    </li>
+                    <!-- SERVIDOR -->
+                    <h:panelGroup layout="block" rendered="#{p:ifAnyGranted('GESTOR,RH')}">
+                        <li class="treeview"><a href="#"> <i class="fa fa-briefcase"></i>
+                            <span>Servidor</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                            <ul class="treeview-menu">
+                                <li><h:commandLink action="#{usuarioSMB.onClickServidor}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Cadastrar</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink
+                                        action="#{usuarioSMB.onClickAcompanhamentoServidor}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Acompanhar Cadastro</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink
+                                        action="#{usuarioSMB.onClickFichaFuncional}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Ficha Funcional</span>
+                                </h:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <!-- SERVIDOR -->
+
+                    <!-- LOTACAO -->
+                    <h:panelGroup layout="block" rendered="#{p:ifAnyGranted('GESTOR,CADASTRO')}">
+                        <li class="treeview"><a href="#"> <i class="fa fa-university"></i>
+                            <span>Lotação</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                            <ul class="treeview-menu">
+                                <li><h:commandLink action="#{usuarioSMB.onClickAcompanhamentoLotacao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Cadastrar</span>
+                                </h:commandLink></li>
+                                <!--<li><h:commandLink action="#{usuarioSMB.onClickAcompanhamentoLotacao}">-->
+                                    <!--<i class="fa fa-angle-double-right"></i>-->
+                                    <!--<span>Organograma</span>-->
+                                <!--</h:commandLink></li>-->
+                                <li><h:commandLink action="#{usuarioSMB.onClickAcompanhamentoLotacaoFolha}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Lotação Folha</span>
+                                </h:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <!-- LOTACAO -->
+
+                    <!-- MONITORAMENTO -->
+                    <h:panelGroup layout="block" rendered="#{p:ifAnyGranted('GESTOR,RH')}">
+                        <li class="treeview"><a href="#"> <i class="fa fa-desktop"></i>
+                            <span>Monitoramento</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                            <ul class="treeview-menu">
+                                <li><h:commandLink action="#{usuarioSMB.onClickMonitoramentoServidor}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Servidor</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickMonitoramentoLotacao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Lotação</span>
+                                </h:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <!-- MONITORAMENTO -->
+
+                    <!-- USUARIO -->
+                    <h:panelGroup layout="block" rendered="#{p:ifAnyGranted('GESTOR')}">
+                        <li class="treeview"><a href="#"> <i class="fa fa-user"></i>
+                            <span>Usuário</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                            <ul class="treeview-menu">
+                                <li><h:commandLink action="#{usuarioSMB.onClickAcompanhamentoUsuario}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Cadastrar</span>
+                                </h:commandLink></li>
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <!-- USUARIO -->
+
+                    <!-- CONFIGURACAO -->
+                    <h:panelGroup layout="block" rendered="#{p:ifAnyGranted('GESTOR, CADASTRO')}">
+                        <li class="treeview .active"><a href="#"> <i
+                                class="fa fa-cog"></i> <span>Configurações</span> <i
+                                class="fa fa-angle-left pull-right"></i>
+                        </a>
+                            <ul class="treeview-menu">
+                                <li><h:commandLink action="#{usuarioSMB.onClickAvisos}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Avisos</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickPredio}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Prédio</span>
+                                </h:commandLink></li>
+                                <!--<li><h:commandLink action="#{usuarioSMB.onClickOrgao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Orgão</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickFuncao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Função</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickCargo}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Cargo</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickArea}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Área</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickCurso}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Curso</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickTipoVinculo}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Tipo Vinculo</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickTipoLotacao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Tipo Lotação</span>
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{usuarioSMB.onClickSituacao}">
+                                    <i class="fa fa-angle-double-right"></i>
+                                    <span>Situação</span>
+                                </h:commandLink></li>-->
+                            </ul>
+                        </li>
+                    </h:panelGroup>
+                    <!-- CONFIGURACAO -->
+
+                    <!--<li class="treeview"><a href="#"> <i class="fa fa-exchange"></i>-->
+                    <!--<span>Controle de Acesso</span> <i class="fa fa-angle-left pull-right"></i>-->
+                    <!--</a>-->
+                    <!--<ul class="treeview-menu">-->
+                    <!--<li><h:commandLink>-->
+                    <!--<i class="fa fa-angle-double-right"></i>-->
+                    <!--<span>Gerenciar Usuários</span>-->
+                    <!--</h:commandLink></li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
+                    <li><h:commandLink action="#{usuarioSMB.onClickSobre}">
+                        <i class="fa fa-life-buoy"></i>
+                        <span> #{msg['menu.about']}</span>
+                    </h:commandLink></li>
+                </ul>
+            </section>
+        </aside>
+    </h:form>
+</ui:fragment>

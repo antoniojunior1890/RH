@@ -1,0 +1,194 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Lotação</a></li>
+            <li><a><i class="fa fa-edit"></i> Vincular Servidor à Lotação</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 4000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>Servidor
+                                    <small>Lotar</small>
+                                </h2>
+                            </div>
+                            <h:form>
+                                <div class="row">
+                                    <h:commandLink id="btnNovo" class="btn btn-default"
+                                                   style="float: right; margin-right: 50px"
+                                                   action="#{usuarioSMB.onClickAcompanhamentoLotacao}">
+                                        <i class="fa fa-file-o"></i>
+                                        <span>Novo</span>
+                                    </h:commandLink>
+                                </div>
+                            </h:form>
+                            <h:form id="form" enctype="multipart/form-data">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-2 form-group">
+                                            <h:outputLabel value="Matrícula" for="matricula" style="font-weight: 400;"/>
+                                            <p:inputText id="matricula" disabled="true"
+                                                         value="#{lotacaoServidorVMB.servidor.matricula}"
+                                                         styleClass="form-control"/>
+                                        </div>
+                                        <div class="col-md-2 form-group">
+                                            <h:outputLabel value="CPF" for="cpf" style="font-weight: 400;"/>
+                                            <p:inputText id="cpf" disabled="true"
+                                                         value="#{lotacaoServidorVMB.servidor.pessoa.cpf}"
+                                                         styleClass="form-control"/>
+                                        </div>
+                                        <div class="col-md-8 form-group">
+                                            <h:outputLabel value="Nome" for="nome" style="font-weight: 400;"/>
+                                            <p:inputText id="nome" disabled="true"
+                                                         value="#{lotacaoServidorVMB.servidor.pessoa.nome}"
+                                                         styleClass="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 form-group">
+                                            <h:outputLabel value="Situação" for="situacao" style="font-weight: 400;"/>
+                                            <p:inputText id="situacao" disabled="true"
+                                                         value="#{lotacaoServidorVMB.servidor.situacao.descricao}"
+                                                         styleClass="form-control"/>
+                                        </div>
+                                        <div class="col-md-3 form-group">
+                                            <h:outputLabel value="Tipo Vínculo" for="tipoVinculo" style="font-weight: 400;"/>
+                                            <p:inputText id="tipoVinculo" disabled="true"
+                                                         value="#{lotacaoServidorVMB.servidor.tipoVinculo.descricao}"
+                                                         styleClass="form-control"/>
+                                        </div>
+
+                                        <div class="col-md-3 form-group">
+                                            <h:outputLabel value="Lotação" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:autoComplete forceSelection="true"
+                                                            value="#{lotacaoServidorVMB.lotacaoReal}"
+                                                            completeMethod="#{lotacaoServidorVMB.autoCompletarLotacaoReal}"
+                                                            styleClass="autocomplet" required="true"
+                                                            requiredMessage="* Campo Lotação é requerido."
+                                                            var="lotacao" itemValue="#{lotacao}"
+                                                            itemLabel="#{lotacao.nome.trim()}"
+                                                            converter="lotacaoRealConverter" size="55"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 form-group">
+                                            <h:outputLabel value="Função" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:autoComplete forceSelection="true"
+                                                            value="#{lotacaoServidorVMB.funcao}"
+                                                            completeMethod="#{lotacaoServidorVMB.autoCompletarFuncao}"
+                                                            styleClass="autocomplet" required="true"
+                                                            requiredMessage="* Campo Função é requerido."
+                                                            var="funcao" itemValue="#{funcao}"
+                                                            itemLabel="#{funcao.descricao.trim()}"
+                                                            converter="funcaoConverter" size="55"/>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-default"
+                                                           actionListener="#{cargoVMB.novo}"
+                                                           rendered="#{cargoVMB.cargo.id != null}">
+                                                <i class="fa fa-file-o"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Novo</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-success"
+                                                           actionListener="#{cargoVMB.salvar}">
+                                                <i class="fa fa-save"></i>
+                                                <!--<f:ajax execute=":form" render=":form"></f:ajax>-->
+                                                <span>Salvar</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-danger"
+                                                           actionListener="#{cargoVMB.excluir}"
+                                                           rendered="#{cargoVMB.cargo.id != null}">
+                                                <i class="fa fa-trash"></i>
+                                                <!--<f:ajax execute=":form" render=":form"></f:ajax>-->
+                                                <span>Excluir</span>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <p:dataTable value="#{cargoVMB.cargos}" var="cargo"
+                                                         emptyMessage="Nenhum registro encontrado.">
+                                                <p:column headerText="Opções">
+                                                    <h:commandLink>
+                                                        <span class="fa fa-edit fa-lg"></span>
+                                                        <f:setPropertyActionListener value="#{cargo}"
+                                                                                     target="#{cargoVMB.cargo}"></f:setPropertyActionListener>
+                                                        <f:ajax execute="@this" render=":form"></f:ajax>
+                                                    </h:commandLink>
+                                                </p:column>
+                                                <p:column headerText="Descrição">
+                                                    <h:outputText value="#{cargo.descricao}"/>
+                                                </p:column>
+                                                <p:column headerText="Comissionado">
+                                                    <h:outputText
+                                                            value="#{cargo.comissionado == 1?'SIM':'NÃO'}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+        <script>
+            var dettach = function () {
+                $('.select2').select2('destroy');
+                $('.select2-drop-mask').remove();
+            };
+
+            var attach = function () {
+                $('.select2').select2({
+                    allowClear: false,
+                    minimumInputLength: 0,
+                    placeholder: ' '
+                });
+            };
+
+            jsf.ajax.addOnEvent(function (data) {
+                switch (data.status) {
+                    case "success":
+                        attach();
+                        break;
+                }
+            });
+
+            $(window).ready(function () {
+                attach();
+            });
+        </script>
+    </ui:define>
+</ui:composition>
+</html>

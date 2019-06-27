@@ -1,0 +1,96 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:ui="http://java.sun.com/jsf/facelets"
+             xmlns:h="http://java.sun.com/jsf/html">
+
+    <header class="header">
+        <h:form id="formHeader">
+            <h:commandLink action="#{usuarioSMB.onClickPrincipal}" styleClass="logo"
+                           value="Gestão de Pessoas">
+            </h:commandLink>
+            <nav class="navbar navbar-static-top" role="navigation">
+                <a href="#" class="navbar-btn sidebar-toggle"
+                   data-toggle="offcanvas" role="button"> <span class="sr-only">Toggle
+						navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+
+                        <li class="dropdown messages-menu"><a href="#"
+                                                              class="dropdown-toggle" data-toggle="dropdown"> <i
+                                class="fa fa-envelope"></i>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Você tem 1 mensagem</li>
+                                <li>
+                                    <ul class="menu">
+                                        <li><a href="#">
+                                            <div class="pull-left">
+                                                <img src="../resources/img/avatar5.png" class="img-circle"
+                                                     alt="User Image"/>
+                                            </div>
+                                            <h4>
+                                                Suporte
+                                                <small><i class="fa fa-clock-o"></i></small>
+                                            </h4>
+                                            <p>Olá! Tudo bem?</p>
+                                        </a></li>
+                                    </ul>
+                                </li>
+                                <li class="footer"></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown notifications-menu"><a href="#"
+                                                                   class="dropdown-toggle" data-toggle="dropdown"> <i
+                                class="fa fa-warning"></i>
+
+                        </a>
+                            <ul id="dropdown" class="dropdown-menu">
+                                <li class="header"></li>
+                                <li>
+                                    <ul class="menu">
+                                        <ui:repeat id="a" var="alerta" value="" varStatus="status">
+                                            <li></li>
+                                        </ui:repeat>
+                                    </ul>
+
+                                </li>
+                                <li class="footer"><a href="#">Veja todas as
+                                    notificações</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown user user-menu"><a href="#"
+                                                               class="dropdown-toggle" data-toggle="dropdown"> <i
+                                class="fa fa-user"></i> <span> <i class="caret"></i>
+							</span>
+                        </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header bg-light-blue"><img
+                                        src="../resources/img/avatar5.png" class="img-circle"
+                                        alt="User Image"/>
+                                    <p>
+                                        #{usuarioSMB.nomeSobrenome}
+                                        <small>#{usuarioSMB.usuario.cpf}</small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <h:commandButton
+                                                value="Perfil" styleClass="btn btn-default btn-flat"/>
+                                    </div>
+                                    <div class="pull-right">
+                                        <h:outputLink value="/j_spring_security_logout"
+                                                      styleClass="btn btn-default btn-flat">
+                                            <h:outputText value="Sair"/>
+                                        </h:outputLink>
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </h:form>
+    </header>
+</ui:fragment>

@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Monitoramento</a></li>
+            <li><a><i class="fa fa-edit"></i> Servidor</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Monitoramento
+                                    <small>Servidor</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <h:panelGroup id="busca" layout="block" styleClass="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-3 form-group">
+                                                        <h:outputLabel value="Com Lotação" style="font-weight: 400;">
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu id="lotacao" styleClass="form-control"
+                                                                         value="#{monitoramentoServidorVMB.comLotacao}">
+                                                            <f:selectItem noSelectionOption="true"/>
+                                                            <f:selectItem itemValue="#{true}" itemLabel="SIM"/>
+                                                            <f:selectItem itemValue="#{false}" itemLabel="NÃO"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                    <div class="col-md-7 form-group">
+                                                    </div>
+                                                    <div class="col-md-2 form-group">
+                                                        <h:commandLink class="btn btn-primary btn btn-block"
+                                                                       style="margin-top: 25px;float: right;margin-right: 0px">
+                                                            <i class="fa fa-search"></i>
+                                                            <f:ajax execute=":form:busca"
+                                                                    render=":form:dtServidor"
+                                                            ></f:ajax>
+                                                            <span>Buscar</span>
+                                                        </h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:panelGroup>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <p:dataTable value="#{monitoramentoServidorVMB.servidores}"
+                                                                 id="dtServidor" var="servidor"
+                                                                 widgetVar="servidorTable"
+                                                                 emptyMessage="Nenhum registro encontrado." rows="10"
+                                                                 paginator="true" lazy="true"
+                                                                 paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15"
+                                                                 rowKey="#{servidor.id}">
+                                                        <p:column headerText="Nome"
+                                                                  style="width:60px">
+                                                            <h:outputText value="#{servidor.pessoa.nome}"
+                                                                          style="text-align:left"/>
+                                                        </p:column>
+                                                        <p:column headerText="Cargo"
+                                                                  style="width:55px">
+                                                            <h:outputText value="#{servidor.cargo.descricao}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Situação"
+                                                                  style="width:40px;text-align:center">
+                                                            <h:outputText value="#{servidor.situacao.descricao}"
+                                                                          style="text-align:left"/>
+                                                        </p:column>
+                                                        <p:column headerText="Vincular"
+                                                                  style="width:20px;text-align:center">
+                                                            <h:commandLink
+                                                                    action="#{monitoramentoServidorVMB.onClickServidor}">
+                                                                <span class="fa fa-share fa-lg"></span>
+                                                                <f:setPropertyActionListener value="#{servidor}"
+                                                                                             target="#{monitoramentoServidorVMB.servidor}"></f:setPropertyActionListener>
+                                                            </h:commandLink>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

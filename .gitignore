@@ -1,0 +1,5 @@
+$ cat .gitignore
+.idea
+.iml
+ejb/target/generated-sources/
+web/target/generated-sources/

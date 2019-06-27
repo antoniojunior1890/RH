@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Senha</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="bs-callout bs-callout-default">
+                            <h4>Caro(a), #{usuarioSMB.usuario.pessoa.nome}</h4>
+                            Este é o sistema de Recursos Humanos, desenvolvido pela
+                            <code>Supervisão de Desenvolvimento da Sejap.</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

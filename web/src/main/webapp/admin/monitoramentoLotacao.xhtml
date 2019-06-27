@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Monitoramento</a></li>
+            <li><a><i class="fa fa-edit"></i> Lotação</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Monitoramento
+                                    <small>Lotação</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <h:panelGroup id="busca" layout="block" styleClass="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 form-group">
+                                                        <h:outputLabel value="Lotação" style="font-weight: 400;">
+                                                        </h:outputLabel>
+                                                        <p:autoComplete id="lotacaoFiltro" forceSelection="true"
+                                                                        value="#{monitoramentoLotacaoVMB.lotacaoReal}"
+                                                                        completeMethod="#{monitoramentoLotacaoVMB.autoCompletarLotacaoReal}"
+                                                                        styleClass="autocomplet" required="false"
+                                                                        var="lotacaoReal" itemValue="#{lotacaoReal}"
+                                                                        itemLabel="#{lotacaoReal.nome}"
+                                                                        converter="lotacaoRealConverter" size="55"/>
+                                                    </div>
+                                                <div class="col-md-4 form-group"></div>
+                                                    <div class="col-md-2 form-group">
+                                                        <h:commandLink class="btn btn-primary btn btn-block"
+                                                                       style="margin-top: 25px;float: right">
+                                                            <i class="fa fa-search"></i>
+                                                            <f:ajax execute=":form:busca"
+                                                                    render=":form"
+                                                            ></f:ajax>
+                                                            <span>Buscar</span>
+                                                        </h:commandLink>
+                                                    </div>
+                                                </div>
+                                            </h:panelGroup>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <p:dataTable id="dtLotacao"
+                                                                 value="#{monitoramentoLotacaoVMB.servidores}"
+                                                                 var="servidor" lazy="true" rows="10" paginator="true"
+                                                                 widgetVar="servidorTable"
+                                                                 emptyMessage="Nenhum registro encontrado."
+                                                                 paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                                 rowsPerPageTemplate="5,10,15">
+                                                        <p:column headerText="Nome"
+                                                                  style="width:60px">
+                                                            <h:outputText value="#{servidor.pessoa.nome}"
+                                                                          style="text-align:left"/>
+                                                        </p:column>
+                                                        <p:column headerText="Cargo"
+                                                                  style="width:55px">
+                                                            <h:outputText value="#{servidor.cargo.descricao}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Situação"
+                                                                  style="width:40px;text-align:center">
+                                                            <h:outputText value="#{servidor.situacao.descricao}"
+                                                                          style="text-align:left"/>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>
+
+
+
+
+
+

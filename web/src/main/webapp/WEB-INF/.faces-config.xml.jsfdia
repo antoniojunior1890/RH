@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#admin#*" PATH="/admin/*" SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#admin#*:0" NAME="item" PATH="/admin/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="servidor::#admin#servidor.xhtml"
+    NAME="output" PATH="/admin/servidor.xhtml"
+    TARGET="rules:#admin#servidor.xhtml" TITLE="servidor" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="predio::#admin#predio.xhtml" NAME="output1"
+    PATH="/admin/predio.xhtml" TARGET="rules:#admin#predio.xhtml"
+    TITLE="predio" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="lotacaoFolha::#admin#lotacaoFolha.xhtml"
+    NAME="output2" PATH="/admin/lotacaoFolha.xhtml"
+    TARGET="rules:#admin#lotacaoFolha.xhtml" TITLE="lotacaoFolha" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="orgao::#admin#orgao.xhtml" NAME="output3"
+    PATH="/admin/orgao.xhtml" TARGET="rules:#admin#orgao.xhtml"
+    TITLE="orgao" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="funcao::#admin#funcao.xhtml" NAME="output4"
+    PATH="/admin/funcao.xhtml" TARGET="rules:#admin#funcao.xhtml"
+    TITLE="funcao" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="cargo::#admin#cargo.xhtml" NAME="output5"
+    PATH="/admin/cargo.xhtml" TARGET="rules:#admin#cargo.xhtml"
+    TITLE="cargo" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="area::#admin#area.xhtml" NAME="output6"
+    PATH="/admin/area.xhtml" TARGET="rules:#admin#area.xhtml"
+    TITLE="area" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="curso::#admin#curso.xhtml" NAME="output7"
+    PATH="/admin/curso.xhtml" TARGET="rules:#admin#curso.xhtml"
+    TITLE="curso" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#admin#servidor.xhtml"
+  PATH="/admin/servidor.xhtml" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#predio.xhtml"
+  PATH="/admin/predio.xhtml" SHAPE="256,177,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#lotacaoFolha.xhtml"
+  PATH="/admin/lotacaoFolha.xhtml" SHAPE="272,321,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#orgao.xhtml" PATH="/admin/orgao.xhtml"
+  SHAPE="288,465,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#funcao.xhtml"
+  PATH="/admin/funcao.xhtml" SHAPE="304,529,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#cargo.xhtml" PATH="/admin/cargo.xhtml"
+  SHAPE="304,753,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#area.xhtml" PATH="/admin/area.xhtml"
+  SHAPE="304,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#admin#curso.xhtml" PATH="/admin/curso.xhtml"
+  SHAPE="304,817,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

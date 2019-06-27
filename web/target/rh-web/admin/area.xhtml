@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Área</a></li>
+            <li><a><i class="fa fa-edit"></i> Novo</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Área
+                                    <small>Novo</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <h:outputLabel value="Descrição" for="descricao">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputText id="descricao" value="#{areaVMB.area.descricao}"
+                                                         styleClass="form-control" required="true"
+                                                         requiredMessage="* Campo descrição é requerido."/>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-default"
+                                                           actionListener="#{areaVMB.novo}"
+                                                           rendered="#{areaVMB.area.id != null}">
+                                                <i class="fa fa-file-o"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Novo</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-success"
+                                                           actionListener="#{areaVMB.salvar}">
+                                                <i class="fa fa-save"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Salvar</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-danger"
+                                                           actionListener="#{areaVMB.excluir}"
+                                                           rendered="#{areaVMB.area.id != null}">
+                                                <i class="fa fa-trash"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Excluir</span>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <p:dataTable value="#{areaVMB.areas}" var="area"
+                                                         emptyMessage="Nenhum registro encontrado.">
+                                                <p:column headerText="Opções">
+                                                    <h:commandLink>
+                                                        <span class="fa fa-edit fa-lg"></span>
+                                                        <f:setPropertyActionListener value="#{area}"
+                                                                                     target="#{areaVMB.area}"></f:setPropertyActionListener>
+                                                        <f:ajax execute="@this" render=":form"></f:ajax>
+                                                    </h:commandLink>
+                                                </p:column>
+                                                <p:column headerText="Descrição">
+                                                    <h:outputText value="#{area.descricao}"/>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

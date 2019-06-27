@@ -1,0 +1,89 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Perfil</a></li>
+            <li><a><i class="fa fa-edit"></i> Senha</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <h:form id="main">
+            <section class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h:panelGroup id="senhaPadrao" layout="block"
+                                          styleClass="bs-callout bs-callout-info"
+                                          rendered="#{usuarioSMB.senhaPadrao}">
+                                <h4>Caro(a), #{usuarioSMB.usuario.pessoa.nome}</h4>
+                                É necessário a redefinição da sua senha para garantir maior segurança para a sua conta, uma vez que, sua senha é a gerada pelo sistema.
+                            </h:panelGroup>
+                            <!-- MESSAGES -->
+                            <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                        closable="true" showIcon="false"/>
+                            <p:ajaxStatus
+                                    oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                            <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                            <!-- MESSAGES -->
+                            <div class='box box-primary'>
+                                <div class='box-header'>
+                                    <h3 class='box-title'>
+                                        Senha
+                                        <small>Redefinir</small>
+                                    </h3>
+                                </div>
+                                <h:form id="form">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <div class="col-md-4 input-group">
+                                                <h:outputLabel value="Senha " for="senha" style="font-weight: 400;">
+                                                    <i class="fa fa-asterisk" style="color: red;"></i>
+                                                </h:outputLabel>
+                                                <p:password id="senha" value="#{usuarioSMB.senha}"
+                                                            feedback="true" promptLabel="Digite a senha, por favor."
+                                                            weakLabel="Senha fraca" goodLabel="Senha boa"
+                                                            strongLabel="Senha forte" styleClass="form-control"
+                                                            match="repetirSenha" converter="senhaConverter"
+                                                            validatorMessage="* Por favor, verifique as senhas digitas."
+                                                            required="true"
+                                                            requiredMessage="* Campo senha é requerido."/>
+                                            </div>
+                                            <div class="col-md-4 input-group">
+                                                <h:outputLabel value="Confirmar Senha " for="repetirSenha"
+                                                               style="font-weight: 400;">
+                                                    <i class="fa fa-asterisk" style="color: red;"></i>
+                                                </h:outputLabel>
+                                                <p:password id="repetirSenha"
+                                                            value="#{usuarioSMB.confirmarSenha}"
+                                                            styleClass="form-control" required="true" converter="senhaConverter"
+                                                            requiredMessage="* Campo confirmar senha é requerido."/>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <div class="btn-group">
+                                                <h:commandLink class="btn btn-success"
+                                                               action="#{usuarioSMB.redefinirSenha}">
+                                                    <i class="fa fa-save"></i>
+                                                    <span>Salvar</span>
+                                                    <f:ajax execute="form"></f:ajax>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

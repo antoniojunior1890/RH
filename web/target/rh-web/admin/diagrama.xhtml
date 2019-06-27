@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Lotação</a></li>
+            <li><a><i class="fa fa-edit"></i> Novo</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Lotação
+                                    <small>Novo</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group col-md-12 page-header">
+                                            <h3>Diagrama</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="chart_div" class="col-md-12"></div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <script type="text/javascript" src="../resources/js/loader.js"/>
+            <script type="text/javascript">
+                google.charts.load('current', {packages: ["orgchart"]});
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Name');
+                    data.addColumn('string', 'Manager');
+                    data.addColumn('string', 'ToolTip');
+                    data.addRows([
+                            < ui
+                :
+                    repeat
+                    var =
+                    "lotacaoFolha"
+                    value = "#{diagramaVMB.lotacoes}"
+                    varStatus = "status" >
+                            ['#{lotacaoFolha.nome}', '#{lotacaoFolha.lotacaoMae == null ? null : lotacaoFolha.lotacaoMae.nome}', '#{lotacaoFolha.nome}'],
+                </
+                    ui:repeat >
+                ])
+                    ;
+                    var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+                    chart.draw(data, {allowHtml: true});
+                }
+            </script>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

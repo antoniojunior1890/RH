@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="utf-8"></meta>
+    <meta
+            content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+            name='viewport'></meta>
+    <title>Gestão de Pessoas</title>
+
+    <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+    <h:outputStylesheet library="css" name="ionicons.min.css"></h:outputStylesheet>
+    <h:outputStylesheet library="css" name="AdminLTE.css"></h:outputStylesheet>
+    <h:outputStylesheet library="css" name="sejap.css"></h:outputStylesheet>
+    <h:outputStylesheet library="font-awesome"
+                        name="css/font-awesome.min.css"></h:outputStylesheet>
+</h:head>
+
+<h:body class="skin-blue bg-white">
+    <h:form id="form" prependId="false">
+        <div class="form-box" id="login-box">
+            <!-- MESSAGES -->
+            <p:messages id="messages" showDetail="false" autoUpdate="true"
+                        closable="true" showIcon="false"/>
+            <p:ajaxStatus
+                    oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 8000)"/>
+            <!-- MESSAGES -->
+            <div class="header">Login</div>
+            <div class="body bg-gray">
+                <div class="form-group">
+                    <h:outputLabel value="CPF"
+                                   style="font-weight: 400;">
+                        <i class="fa fa-asterisk" style="color: red;"></i>
+                    </h:outputLabel>
+                    <p:inputMask id="j_username" mask="999.999.999-99" value="#{usuarioSMB.cpf}" styleClass="form-control"
+                                 required="true"
+                                 requiredMessage="* Campo cpf é requerido."/>
+                </div>
+                <div class="form-group">
+                    <h:outputLabel value="Senha"
+                                   style="font-weight: 400;">
+                        <i class="fa fa-asterisk" style="color: red;"></i>
+                    </h:outputLabel>
+                    <h:inputSecret id="j_password" styleClass="form-control" required="true" converter="senhaConverter"
+                                   requiredMessage="* Campo senha é requerido."/>
+                </div>
+            </div>
+            <div class="footer bg-gray">
+                <h:commandButton id="btLogin" action="#{usuarioSMB.login}" value="Entrar"
+                                 styleClass="btn bg-olive btn-block">
+                </h:commandButton>
+            </div>
+            <div class="margin text-center">
+                <!--<span>Conheça nossas redes sociais</span> <br />-->
+                <!--<button class="btn bg-light-blue btn-circle">-->
+                <!--<i class="fa fa-facebook"></i>-->
+                <!--</button>-->
+                <!--<button class="btn bg-aqua btn-circle">-->
+                <!--<i class="fa fa-twitter"></i>-->
+                <!--</button>-->
+                <!--<button class="btn bg-red btn-circle">-->
+                <!--<i class="fa fa-google-plus"></i>-->
+                <!--</button>-->
+            </div>
+        </div>
+    </h:form>
+    <!-- jQuery -->
+    <h:outputScript library="primefaces" name="jquery/jquery.js"></h:outputScript>
+    <!-- Bootstrap Core JavaScript -->
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+    <!-- Metis Menu Plugin JavaScript -->
+    <h:outputScript library="metisMenu" name="dist/metisMenu.min.js"></h:outputScript>
+    <h:outputScript library="js" name="AdminLTE/app.js"></h:outputScript>
+    <h:outputScript library="js" name="plugins/iCheck/icheck.min.js"></h:outputScript>
+
+</h:body>
+</html>

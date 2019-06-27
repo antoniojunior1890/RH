@@ -1,0 +1,49 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <b:bean id="appUserDetailService" class="security.AppUserDetailService"/>
+    <http pattern="/resources/**" security="none"/>
+    <http pattern="/public/**" security="none"/>
+
+    <http auto-config="false" use-expressions="true">
+        <intercept-url pattern="/template/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin/principal.jsf" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin/senha.jsf" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin/sobre.jsf" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin/403.jsf" access="isAuthenticated()"/>
+
+        <!-- LOTACAO -->
+        <intercept-url pattern="/admin/acompanhamentoLotacaoFolha.jsf" access="hasAnyRole('GESTOR', 'CADASTRO')"/>
+        <intercept-url pattern="/admin/acompanhamentoLotacao.jsf" access="hasAnyRole('GESTOR', 'CADASTRO')"/>
+        <intercept-url pattern="/admin/lotacao.jsf" access="hasAnyRole('GESTOR', 'CADASTRO')"/>
+        <!-- LOTACAO -->
+
+        <!-- SERVIDOR -->
+        <intercept-url pattern="/admin/acompanhamentoServidor.jsf" access="hasAnyRole('GESTOR', 'RH')"/>
+        <intercept-url pattern="/admin/servidor.jsf" access="hasAnyRole('GESTOR', 'RH')"/>
+        <intercept-url pattern="/admin/visualizarFicha.jsf" access="hasAnyRole('GESTOR', 'RH')"/>
+        <intercept-url pattern="/admin/fichaFuncional.jsf" access="hasAnyRole('GESTOR', 'RH')"/>
+        <!-- SERVIDOR -->
+
+        <!-- USUARIO -->
+        <intercept-url pattern="/admin/acompanhamentoUsuario.jsf" access="hasAnyRole('GESTOR')"/>
+        <intercept-url pattern="/admin/pessoa.jsf" access="hasAnyRole('GESTOR')"/>
+        <!-- USUARIO -->
+
+        <!-- PREDIO -->
+        <intercept-url pattern="/admin/predio.jsf" access="hasAnyRole('GESTOR', 'CADASTRO')"/>
+        <!-- PREDIO -->
+
+        <form-login login-page="/public/login.jsf" authentication-failure-url="/public/login.jsf" default-target-url="/admin/principal.jsf" />
+        <logout logout-url="/j_spring_security_logout" invalidate-session="true"/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="appUserDetailService">
+            <password-encoder hash="md5"></password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+</b:beans>

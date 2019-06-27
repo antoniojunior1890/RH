@@ -1,0 +1,225 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/master.xhtml">
+    <!-- BREADCRUMB -->
+    <ui:define name="nav">
+        <ol class="breadcrumb">
+            <li><a><i class="fa fa-file-pdf-o"></i> Prédio</a></li>
+            <li><a><i class="fa fa-edit"></i> Novo</a></li>
+        </ol>
+    </ui:define>
+    <!-- BREADCRUMB -->
+    <ui:define name="main">
+        <section class="content">
+            <h:panelGroup id="container" layout="block" styleClass="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <!-- MESSAGES -->
+                        <p:messages id="messages" showDetail="false" autoUpdate="true"
+                                    closable="true" showIcon="false"/>
+                        <p:ajaxStatus
+                                oncomplete="setTimeout(function() {$('.ui-messages').slideUp();}, 3000)"/>
+                        <p:ajaxStatus onstart="inicio()" oncomplete="fim()"></p:ajaxStatus>
+                        <!-- MESSAGES -->
+                        <div class='box box-primary'>
+                            <div class='box-header'>
+                                <h2 class='box-title'>
+                                    Prédio
+                                    <small>Novo</small>
+                                </h2>
+                            </div>
+                            <h:form id="form">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <h:outputLabel value="Descrição" for="descricao" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputText id="descricao"
+                                                         value="#{predioVMB.predio.descricao}"
+                                                         styleClass="form-control" required="true"
+                                                         requiredMessage="* Campo descrição é requerido."/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-2 form-group">
+                                            <h:outputLabel value="CEP" for="cep" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputMask mask="99999-999" id="cep"
+                                                         value="#{predioVMB.predio.cep}" styleClass="form-control"
+                                                         required="true" requiredMessage="* Campo cep é requerido."/>
+                                        </div>
+
+                                        <div class="col-md-8 form-group">
+                                            <h:outputLabel value="Logradouro" for="logradouro"
+                                                           style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputText id="logradouro"
+                                                         value="#{predioVMB.predio.logradouro}"
+                                                         styleClass="form-control" required="true"
+                                                         requiredMessage="* Campo logradouro é requerido."/>
+                                        </div>
+
+                                        <div class="col-md-2 form-group">
+                                            <h:outputLabel value="Número" for="numero" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputText id="numero" value="#{predioVMB.predio.numero}"
+                                                         styleClass="form-control" required="true"
+                                                         requiredMessage="* Campo numero é requerido."/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <h:outputLabel value="Complemento" for="complemento"
+                                                           style="font-weight: 400;"/>
+                                            <p:inputText id="complemento"
+                                                         value="#{predioVMB.predio.complemento}"
+                                                         styleClass="form-control"/>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <h:outputLabel value="Bairro" for="bairro" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <p:inputText id="bairro" value="#{predioVMB.predio.bairro}"
+                                                         styleClass="form-control" required="true"
+                                                         requiredMessage="* Campo bairro é requerido."/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 form-group">
+                                            <h:outputLabel value="Estado" for="estado" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu id="estado" styleClass="form-control"
+                                                             value="#{predioVMB.estadoSelecionado}"
+                                                             converter="conversor">
+                                                <f:selectItem noSelectionOption="true"/>
+                                                <f:selectItems itemLabel="#{estado.nome.toUpperCase()}"
+                                                               value="#{predioVMB.estados}" var="estado"/>
+                                                <f:ajax execute="@this" render="municipio" onevent="dettach()"
+                                                        listener="#{predioVMB.onSelectEstado}"></f:ajax>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <h:outputLabel value="Municipio" for="municipio" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu id="municipio" styleClass="form-control"
+                                                             value="#{predioVMB.predio.municipio}"
+                                                             required="true"
+                                                             requiredMessage="* Campo municipio é requerido."
+                                                             converter="conversor">
+                                                <f:selectItem noSelectionOption="true"/>
+                                                <f:selectItems itemLabel="#{municipio.nome}"
+                                                               value="#{predioVMB.municipios}"
+                                                               var="municipio"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="col-md-4 form-group">
+                                            <h:outputLabel value="Tipo Posse" for="tipoPosse" style="font-weight: 400;">
+                                                <i class="fa fa-asterisk" style="color: red;"></i>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu id="tipoPosse" styleClass="form-control"
+                                                             value="#{predioVMB.predio.tipoPosse}"
+                                                             required="true"
+                                                             requiredMessage="* Campo tipo posse é requerido."
+                                                             converter="conversor">
+                                                <f:selectItem noSelectionOption="true"/>
+                                                <f:selectItems itemLabel="#{tipoPosses.descricao}"
+                                                               value="#{predioVMB.tipoPosses}"
+                                                               var="tipoPosses"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <p:dataTable value="#{predioVMB.predios}" var="predio"
+                                                         emptyMessage="Nenhum registro encontrado.">
+                                                <p:column headerText="Descrição">
+                                                    <h:outputText value="#{predio.descricao}"/>
+                                                </p:column>
+                                                <p:column headerText="Opções">
+                                                    <h:commandLink>
+                                                        <span class="fa fa-edit fa-lg"></span>
+                                                        <f:setPropertyActionListener value="#{predio}"
+                                                                                     target="#{predioVMB.predio}"></f:setPropertyActionListener>
+                                                        <f:ajax execute="@this" render=":form"></f:ajax>
+                                                    </h:commandLink>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-footer">
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-default"
+                                                           actionListener="#{predioVMB.novo}"
+                                                           rendered="#{predioVMB.predio.id != null}">
+                                                <i class="fa fa-file-o"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Novo</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-success"
+                                                           actionListener="#{predioVMB.salvar}">
+                                                <i class="fa fa-save"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Salvar</span>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="btn-group">
+                                            <h:commandLink class="btn btn-danger"
+                                                           actionListener="#{predioVMB.excluir}"
+                                                           rendered="#{predioVMB.predio.id != null}">
+                                                <i class="fa fa-trash"></i>
+                                                <f:ajax execute=":form" render=":form"></f:ajax>
+                                                <span>Excluir</span>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </h:panelGroup>
+        </section>
+        <script>
+            var dettach = function () {
+                $('.select2').select2('destroy');
+                $('.select2-drop-mask').remove();
+            };
+
+            var attach = function () {
+                $('.select2').select2({
+                    allowClear: false,
+                    minimumInputLength: 0,
+                    placeholder: ' '
+                });
+            };
+
+            jsf.ajax.addOnEvent(function (data) {
+                switch (data.status) {
+                    case "success":
+                        attach();
+                        break;
+                }
+            });
+
+            $(window).ready(function () {
+                attach();
+            });
+        </script>
+    </ui:define>
+</ui:composition>
+</html>
